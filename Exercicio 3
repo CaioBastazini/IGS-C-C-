@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <time.h>
+
+void pause(float);
+
+void pause(float delay1)
+{
+
+    if (delay1 < 0.001) return; 
+
+    float inst1 = 0, inst2 = 0;
+
+    inst1 = (float)clock() / (float)CLOCKS_PER_SEC;
+
+    while (inst2 - inst1 < delay1) inst2 = (float)clock() / (float)CLOCKS_PER_SEC;
+
+    return;
+
+}
+
+
+int main(void)
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
+
+    
+    GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+    printf("A cor azul.\n");
+
+    pause(1.5);
+
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+    printf("A cor verde.\n");
+
+    pause(1.5);
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+    printf("A cor vermelho.\n");
+
+ 
+
+	return 0;
+
+}
