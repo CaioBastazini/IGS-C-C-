@@ -1,0 +1,133 @@
+#include <iostream>
+
+using namespace std;
+
+bool check_palindrome(string sentence)
+{
+
+    string sentence_without_space;
+    
+    
+    
+    for (int i = 0; i < sentence.size(); i++)
+    {
+
+        if (sentence[i] == ' ')
+        {
+
+            continue;
+        }
+
+        
+        sentence_without_space.push_back(sentence[i]);
+    }
+    
+
+    
+    for (int i = 0, j = sentence_without_space.size() - 1; i <= j; i++, j--)
+    {
+
+        if (sentence_without_space[i] != sentence_without_space[j])
+        {
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+string analyze_sentence(string sentence)
+{
+
+    string greater_palindrome;
+    string sub_sentence;
+    string sub_sentence_palindrome;
+    
+
+    
+    for (int i = 0; i < sentence.size(); i++)
+    {
+
+        sentence[i] = tolower(sentence[i]);
+    }
+
+    
+    for (int i = 0; i < sentence.size(); i++)
+    {
+
+        
+        if (sentence[i] == ' ')
+            continue;
+
+        
+        sub_sentence = sentence.substr(i);
+
+        
+        for (int j = sub_sentence.size(); j > 0; j--)
+        {
+
+            
+            if (sub_sentence[j] == ' ')
+                continue;
+
+            
+            sub_sentence_palindrome = sub_sentence.substr(0, j);
+
+            
+            if (check_palindrome(sub_sentence_palindrome))
+            {
+
+                
+                if (sub_sentence_palindrome.size() > greater_palindrome.size())
+                {
+
+                    greater_palindrome = sub_sentence_palindrome;
+                }
+                break; 
+            }
+        }
+    }
+
+    return greater_palindrome;
+}
+
+int main()
+{
+    
+
+    FILE* file;
+    file = fopen("arquivo.txt", "r");
+
+    char u[30];
+    char d[30];
+    char t[30];
+    char q[30];
+
+
+    fscanf(file, "%s %s %s %s", &u, &d, &t, &q);
+
+    
+
+
+    string greater_palindromeu = analyze_sentence(u);
+    string greater_palindromed = analyze_sentence(d);
+    string greater_palindromet = analyze_sentence(t);
+    string greater_palindromeq = analyze_sentence(q);
+    
+
+    printf("%s\n", greater_palindromeu.c_str());
+    printf("%s\n", greater_palindromed.c_str());
+    printf("%s\n", greater_palindromet.c_str());
+    printf("%s\n", greater_palindromeq.c_str());
+
+    fclose(file);
+
+    system("PAUSE");
+    return 0;
+
+
+
+    
+}
